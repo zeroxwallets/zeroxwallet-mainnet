@@ -6,19 +6,20 @@ export async function POST(req: Request) {
   try {
     const { accountId, amount } = await req.json();
 
+    // Validation
     if (!accountId || !amount) {
       return NextResponse.json({ error: "Missing fields" }, { status: 400 });
     }
 
-    // ✅ Create transaction
+    // Create transaction
     const transaction = new TransferTransaction()
       .addHbarTransfer(client.operatorAccountId, new Hbar(-amount)) // sender
       .addHbarTransfer(AccountId.fromString(accountId), new Hbar(amount)); // receiver
 
-    // ✅ Execute karo
+    // Execute
     const txResponse = await transaction.execute(client);
 
-    // ✅ Receipt lao
+    // Receipt
     const receipt = await txResponse.getReceipt(client);
 
     return NextResponse.json({
@@ -26,6 +27,9 @@ export async function POST(req: Request) {
       transactionId: txResponse.transactionId.toString(),
     });
   } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json(
+      { error: error.message || "Transaction failed" },
+      { status: 500 }
+    );
   }
 }
