@@ -4,21 +4,21 @@ import client from "../../../lib/hedera";
 
 export async function POST(req: Request) {
   try {
-    const { to, amount } = await req.json();
+    const { accountId, amount } = await req.json();
 
-    if (!to || !amount) {
+    if (!accountId || !amount) {
       return NextResponse.json({ error: "Missing fields" }, { status: 400 });
     }
 
-    // 🟢 Transaction create karo
+    // ✅ Create transaction
     const transaction = new TransferTransaction()
-      .addHbarTransfer(client.operatorAccountId!, new Hbar(-amount)) // sender
-      .addHbarTransfer(AccountId.fromString(to), new Hbar(amount)); // receiver
+      .addHbarTransfer(client.operatorAccountId, new Hbar(-amount)) // sender
+      .addHbarTransfer(AccountId.fromString(accountId), new Hbar(amount)); // receiver
 
-    // 🟢 Execute karo
+    // ✅ Execute karo
     const txResponse = await transaction.execute(client);
 
-    // 🟢 Receipt lao
+    // ✅ Receipt lao
     const receipt = await txResponse.getReceipt(client);
 
     return NextResponse.json({
