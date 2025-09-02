@@ -4,11 +4,13 @@ import { useState } from "react";
 import { QRCodeCanvas } from "qrcode.react";
 
 export default function Home() {
+  // 👉 States
   const [accountId, setAccountId] = useState("");
   const [amount, setAmount] = useState(0);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [history, setHistory] = useState<any[]>([]);
+  const [balance, setBalance] = useState(0);
 
   // ✅ Balance check
   const checkBalance = async () => {
@@ -16,7 +18,8 @@ export default function Home() {
       setLoading(true);
       const res = await fetch("/api/balance");
       const data = await res.json();
-      setMessage(`💰 Balance: ${data.balance} ℏ`);
+      setBalance(data.balance);
+      setMessage(`Balance: ${data.balance} ℏ`);
     } catch (err) {
       setMessage("❌ Error fetching balance");
     } finally {
@@ -46,13 +49,13 @@ export default function Home() {
     }
   };
 
-  // ✅ Load transaction history
+  // ✅ Load Transaction History
   const loadHistory = async () => {
     try {
       setLoading(true);
       const res = await fetch("/api/history");
       const data = await res.json();
-      setHistory(data.transactions || []);
+      setHistory(data.history || []);
     } catch (err) {
       setMessage("❌ Error loading history");
     } finally {
@@ -61,109 +64,75 @@ export default function Home() {
   };
 
   return (
-    <main className="p-6 space-y-6">
+    <div className="p-6 max-w-2xl mx-auto">
       <h1 className="text-2xl font-bold">🚀 ZeroxWallet Testnet</h1>
 
-      {/* ✅ Balance Section */}
-      <div>
-        <button
-          onClick={checkBalance}
-          disabled={loading}
-          className="px-4 py-2 bg-green-600 text-white rounded"
-        >
-          {loading ? "Loading..." : "Check Balance"}
-        </button>
-      </div>
+      {/* Balance */}
+      <button
+        onClick={checkBalance}
+        disabled={loading}
+        className="px-4 py-2 bg-blue-600 text-white rounded mt-4"
+      >
+        {loading ? "Checking..." : "Check Balance"}
+      </button>
+      <p className="mt-2">Balance: {balance} ℏ</p>
 
-      {/* ✅ Send HBAR Section */}
-      <div>
-        <h2 className="text-lg font-semibold">Send HBAR</h2>
-        <input
-          type="text"
-          placeholder="Receiver Account ID (0.0.x)"
-          value={accountId}
-          onChange={(e) => setAccountId(e.target.value)}
-          className="border px-3 py-2 rounded w-full"
-        />
-        <input
-          type="number"
-          placeholder="Amount (ℏ)"
-          value={amount}
-          onChange={(e) => setAmount(Number(e.target.value))}
-          className="border px-3 py-2 rounded w-full mt-2"
-        />
-        <button
-          onClick={sendHBAR}
-          disabled={loading || !accountId || amount <= 0}
-          className="px-4 py-2 mt-2 bg-blue-600 text-white rounded"
-        >
-          {loading ? "Processing..." : `Send ${amount} ℏ`}
-        </button>
-      </div>
+      {/* Send HBAR */}
+      <h2 className="text-lg font-semibold mt-6">Send HBAR</h2>
+      <input
+        type="text"
+        placeholder="Receiver Account ID"
+        value={accountId}
+        onChange={(e) => setAccountId(e.target.value)}
+        className="border p-2 w-full mt-2"
+      />
+      <input
+        type="number"
+        placeholder="Amount"
+        value={amount}
+        onChange={(e) => setAmount(Number(e.target.value))}
+        className="border p-2 w-full mt-2"
+      />
+      <button
+        onClick={sendHBAR}
+        disabled={loading}
+        className="px-4 py-2 bg-green-600 text-white rounded mt-4"
+      >
+        {loading ? "Sending..." : `Send ${amount} ℏ`}
+      </button>
 
-      {/* ✅ Receive Section with QR */}
-      <div>
-        <h2 className="text-lg font-semibold">Receive HBAR</h2>
-        <p className="break-words">
-          Your Account ID: {process.env.NEXT_PUBLIC_HEDERA_ACCOUNT_ID}
-        </p>
-        <button
-          onClick={() =>
-            navigator.clipboard.writeText(
-              process.env.NEXT_PUBLIC_HEDERA_ACCOUNT_ID || ""
-            )
-          }
-          className="px-4 py-2 bg-gray-600 text-white rounded mt-2"
-        >
-          📋 Copy Account ID
-        </button>
-        <div className="flex justify-center mt-4">
-          <QRCodeCanvas
-            value={process.env.NEXT_PUBLIC_HEDERA_ACCOUNT_ID || ""}
-            size={150}
-            bgColor="#ffffff"
-            fgColor="#000000"
-            includeMargin={true}
-          />
-        </div>
-      </div>
+      {/* Receive HBAR */}
+      <h2 className="text-lg font-semibold mt-6">Receive HBAR</h2>
+      <p>Your Account ID: {process.env.HEDERA_ACCOUNT_ID}</p>
+      <QRCodeCanvas value={process.env.HEDERA_ACCOUNT_ID || ""} />
 
-      {/* ✅ Transaction History */}
-      <div>
-        <h2 className="text-lg font-semibold">📜 Transaction History</h2>
-        <button
-          onClick={loadHistory}
-          disabled={loading}
-          className="px-4 py-2 bg-purple-600 text-white rounded mt-2"
-        >
-          {loading ? "Loading..." : "Load History"}
-        </button>
-        <ul className="list-disc pl-5 space-y-2 mt-4">
-          {history.map((txn, idx) => (
-            <li key={idx} className="border p-2 rounded">
-              <p>🆔 {txn.transaction_id}</p>
-              <p>⏱ {txn.consensus_timestamp}</p>
-              <p>
-                Transfers:{" "}
-                {txn.transfers
-                  ?.map((t: any) => `${t.account} (${t.amount} ℏ)`)
-                  .join(", ")}
-              </p>
-              <a
-                href={`https://hashscan.io/testnet/transaction/${txn.transaction_id}`}
-                target="_blank"
-                rel="noreferrer"
-                className="text-blue-500 underline"
-              >
-                🔗 View on Explorer
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
+      {/* Transaction History */}
+      <h2 className="text-lg font-semibold mt-6">📜 Transaction History</h2>
+      <button
+        onClick={loadHistory}
+        disabled={loading}
+        className="px-4 py-2 bg-purple-600 text-white rounded mt-2"
+      >
+        {loading ? "Loading..." : "Load History"}
+      </button>
 
-      {/* ✅ Messages */}
+      <ul className="list-disc pl-5 space-y-2 mt-2">
+        {history.map((txn: any, idx: number) => (
+          <li key={idx} className="border p-2 rounded">
+            <p>🆔 {txn.transaction_id}</p>
+            <p>⏰ {txn.consensus_timestamp}</p>
+            <p>
+              Transfers:{" "}
+              {txn.transfers
+                .map((t: any) => `${t.account} (${t.amount}ℏ)`)
+                .join(", ")}
+            </p>
+          </li>
+        ))}
+      </ul>
+
+      {/* Message */}
       {message && <p className="mt-4 font-semibold">{message}</p>}
-    </main>
+    </div>
   );
 }

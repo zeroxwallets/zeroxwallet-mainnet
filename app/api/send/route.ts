@@ -5,6 +5,7 @@ import client from "../../../lib/hedera";
 export async function POST(req: Request) {
   try {
     const { accountId, amount } = await req.json();
+    console.log("API received:", accountId, amount);
 
     // Validation
     if (!accountId || !amount) {
