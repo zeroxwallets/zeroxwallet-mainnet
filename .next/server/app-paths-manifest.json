@@ -1,6 +1,0 @@
-{
-  "/api/history/route": "app/api/history/route.js",
-  "/api/send/route": "app/api/send/route.js",
-  "/api/balance/route": "app/api/balance/route.js",
-  "/page": "app/page.js"
-}
