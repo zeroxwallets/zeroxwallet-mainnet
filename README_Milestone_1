@@ -1,0 +1,49 @@
+# ZeroxWallet – Milestone 1 Submission
+
+## 📌 Project Overview
+ZeroxWallet is a lightweight non-custodial wallet built for the Hedera Testnet.  
+It allows users to create accounts, check balances, send/receive HBAR, and view transaction history through a simple web interface.
+
+Our goal is to make Hedera accounts and basic asset management accessible for developers and early adopters.
+
+---
+
+## ✅ Deliverables Completed (Milestone 1)
+
+### 1. Wallet DApp (Frontend)
+- Implemented using Next.js + Vercel (Testnet).
+- Core features:
+  - View wallet balance (HBAR).
+  - Send HBAR to another account ID.
+  - Receive HBAR (QR code + Account ID).
+  - View transaction history.
+
+### 2. Backend & APIs
+- Integrated with Firebase Firestore for account management.
+- APIs implemented:
+  - **/api/balance** → Fetch user balance using Hedera SDK + Mirror Node.
+  - **/api/send** → Send HBAR transaction (with private key signing).
+  - **/api/history** → Load recent transactions from Mirror Node.
+
+### 3. Smart Contract DeliverablHelloHederaelloHedera** Solidity contract deployed on Hedera JSON-RPC relay.
+- Contract functionality:
+  - Stores a message ("Hello, Hedera!" by default).
+  - Supports updating the message via setMessage().
+- Verified inteRemix IDE + MetaMask+ MetaMask**:
+  - Deployed successfully on Hedera Testnet.
+  - Updated contract state (message = "zeroxwallet test").
+  - Transaction proof attached in screenshots.
+
+### 4. EvidencWallet UI screenshotscreenshots** showing balance, send/receive, andAPI curl test logs test logs** verifying balance fetch and HBAR tSmart contract deployment screenshotscreenshots** vFirestore DB screenshotscreenshot** showing accountId + privateKey storage.
+
+---
+
+## 🛠️ TFrontend:*Frontend:** Next.js, TailBackend:**Backend:** Firebase Admin SDK, Firestore, Next.js APIBlockchain:lockchain:** Hedera Hashgraph (Testnet), Mirror Node, HedSmart Contract: Contract:** Solidity ^0.8.x, Remix IDE, MetaMask (Hedera JSON-RPC relay)
+
+---
+
+## 🚀 How to Test Locally
+1. Clone the repository:
+   `bash
+   git clone <repo-url>
+   cd zeroxwallet-testnet
