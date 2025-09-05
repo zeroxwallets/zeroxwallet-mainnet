@@ -31,6 +31,43 @@ Frontend built with Next.js (UI for wallet actions).
 
 Backend APIs integrated with Firebase Admin SDK for account handling.
 
+## Proof (Milestone 1)
+
+- UI screenshots here 👇 
+
+Balance check - `docs/Screenshot 2025-09-05 210628.png`
+
+Send - `docs/Screenshot 2025-09-05 210745.png`
+
+History - `docs/Screenshot 2025-09-05 210845.png`
+
+- Firestore DB screenshot 👇
+
+`docs/photo_6185870092114446714_y.jpg`
+
+- API balance curl screenshot 👇
+
+`docs/Screenshot 2025-09-05 220059.png`
+
+- API send curl screenshot 👇 
+
+`docs/Screenshot 2025-09-05 221920.png`
+
+- Smart contract deploy 👇 
+
+`docs/Screenshot 2025-09-05 211657.png`
+
+- Smart Contract Interaction 👇 
+
+`docs/Screenshot 2025-09-05 212613.png`
+
+- Smart contract explorer link: 
+
+`https://hashscan.io/testnet/transaction/1757080652.193640000`
+
+- Demo walk-through: <paste 
+
+Loom or YouTube link here>
 
 
 ## ✅ Deliverables Completed (Milestone 1)
