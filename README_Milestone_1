@@ -1,10 +1,22 @@
 # ZeroxWallet – Milestone 1 Submission
 
-## 📌 Project Overview
-ZeroxWallet is a lightweight non-custodial wallet built for the Hedera Testnet.  
-It allows users to create accounts, check balances, send/receive HBAR, and view transaction history through a simple web interface.
+Our project, ZeroxWallet, is a lightweight non-custodial wallet built on the Hedera TestNet. The wallet allows users to:
 
-Our goal is to make Hedera accounts and basic asset management accessible for developers and early adopters.
+
+Check HBAR balance in real-time by integrating with Hedera Mirror Node APIs.
+
+Send and receive HBAR securely using Hedera account IDs.
+
+View transaction history directly inside the wallet interface.
+
+Integrate Firebase for account management and authentication during testing.
+
+
+Additionally, we have successfully deployed and tested a sample smart contract on Hedera EVM using Remix, proving end-to-end Hedera integration. This validates that our wallet can support not only native HBAR transactions but also future smart contract interactions.
+
+The frontend has been deployed with a working TestNet UI (balance check, send/receive forms, QR code for receiving, and transaction history). Backend APIs are built with Next.js and integrated with Firebase Admin SDK.
+
+With this milestone, we demonstrate a fully functional TestNet wallet, a deployed smart contract, and a public GitHub repo showcasing all implementation details.
 
 
 ## ✅ Deliverables Completed (Milestone 1)
