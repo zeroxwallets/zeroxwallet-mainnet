@@ -1,0 +1,31 @@
+## 🚀 Proof of Work – Milestone 1 (Mainnet)
+
+As part of Milestone 1, the following deliverables were completed and verified on Hedera Mainnet:
+
+### ✅ Smart Contract
+- **Deployed & Verified** on Hedera Mainnet  
+- HashScan Link: [View Contract](https://hashscan.io/mainnet/contract/0.0.9861842)
+
+### ✅ Wallet Interface
+- Google login integration  
+- Auto wallet creation & funding (0.0001 HBAR)  
+- Balance fetch (live from mainnet)  
+- Send/Receive HBAR with working QR code  
+- Transaction history fetch (Mirror Node integration)  
+
+### ✅ Screenshots
+Proof screenshots stored in the [`/screenshots`](./screenshots) folder:  
+- `ui_balance_screenshot` – Balance fetch  
+- `ui_send_screenshot` – Sending HBAR  
+- `ui_history_screenshot` – Transaction history  
+- `contract_deployed_screenshot` – Contract deployed  
+- `contract_interaction_screenshot` – Contract interaction  
+- `firebase_db_screenshot` – Prototype key storage  
+
+### ✅ Demo Videos
+- **Live mainnet demo:- https://drive.google.com/file/d/18B5wdAKlNZltOTTBge3dxz-vUVg71QZ1/view?usp=drivesdk
+- **Deployment walkthrough :- https://drive.google.com/file/d/1n5LPjCrRSMABXk2eJU8uV4sznOmh21da/view?usp=drivesdk
+
+### ⚠️ Note on Key Management
+Currently, private keys are stored in Firebase **only for prototype/demo purposes**.  
+For production, ZeroxWallet will move to a fully **non-custodial model** where keys stay only on the client-side (localStorage/secure storage)
